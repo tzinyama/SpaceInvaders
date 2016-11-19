@@ -58,7 +58,7 @@ class BossManager{
     
     //See if game is over
     if(bossMan.isDead())
-      gameState = 4;  // Another game state for beat the game
+      gameState = GameState.GAMEOVER;  // Another game state for beat the game
       
     //Main Bullets
     for(int i = 0; i < mainBullets.size(); i++){

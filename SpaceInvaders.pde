@@ -2,13 +2,22 @@
 Space Invaders
 by Tino Zinyama
 */
+enum GameState{
+  PREGAME,
+  INGAME,
+  PAUSED,
+  LEVELUP,
+  GAMEOVER,
+  BOSSBATTLE
+}
+
 Rocket player;
 WeaponManager weaponManager;
 EnemyManager  enemyManager;
 BossManager bossMan;
 boolean playerWon = false;
 
-int gameState; //0 = pregame, 1 = ingame, 2 = paused, 3 = level up, 4 = game over, 5 = boss battle
+GameState gameState;
 int level;
 int score;
 
@@ -32,7 +41,7 @@ void setup(){
   bossMan = new BossManager();
   enemyManager = new EnemyManager();
   weaponManager = new WeaponManager(player);
-  gameState = 0;
+  gameState = GameState.PREGAME;
   level = 1;
   score = 0;
   
@@ -60,7 +69,7 @@ void draw(){
 void manageGame(){
   
   //WELCOME SCREEN
-  if (gameState == 0){ //
+  if (gameState == GameState.PREGAME){ //
     noStroke();
     ellipseMode(CENTER);
     fill(#E9FB00);
@@ -80,7 +89,7 @@ void manageGame(){
   
   }
   //INGAME
-  else if(gameState == 1){
+  else if(gameState == GameState.INGAME){
     
     backParticles1.run();
     backParticles2.run();
@@ -107,16 +116,16 @@ void manageGame(){
     //Check for level up condition
     if (enemyManager.enemies.size() == 0){
       level++; //level up
-      gameState = 3; //Level Up
+      gameState = GameState.LEVELUP; //Level Up
     }
     
     //Check for game over condition
     if(player.lives == 0){
-      gameState = 4;
+      gameState = GameState.GAMEOVER;
     }
   }
   //PAUSED
-  else if(gameState == 2){
+  else if(gameState == GameState.PAUSED){
     noStroke();
     ellipseMode(CENTER);
     fill(#E9FB00);
@@ -132,7 +141,7 @@ void manageGame(){
     textSize(15);
   }
   //LEVEL UP
-  else if(gameState == 3){
+  else if(gameState == GameState.LEVELUP){
     noStroke();
     ellipseMode(CENTER);
     fill(#E9FB00);
@@ -152,7 +161,7 @@ void manageGame(){
     setupLevel();
   }
   //GAME OVER
-  else if (gameState == 4){
+  else if (gameState == GameState.GAMEOVER){
     noStroke();
     ellipseMode(CENTER);
     fill(#E9FB00);
@@ -170,7 +179,7 @@ void manageGame(){
     
   }
   //BOSS BATTLE
-  else if (gameState == 5){
+  else if (gameState == GameState.BOSSBATTLE){
     //PLAYER
     player.collide(bossMan.mainBullets);
     player.collide(bossMan.sideBullets);
@@ -196,16 +205,15 @@ void manageGame(){
     
     //Check for game over condition
     if(player.lives == 0){
-      gameState = 4;
+      gameState = GameState.GAMEOVER;
     }
     //Check for player won condition
     if(bossMan.isDead()){
       playerWon = true;
-      gameState = 4;
+      gameState = GameState.GAMEOVER;
     }
   }
 }
-
 
 //************************************
 //Method to display game stats
@@ -422,10 +430,10 @@ void setupLevel(){
       weaponManager = new WeaponManager(player);
       if(player.lives <= 5)
         player.lives += 5;
-      gameState = 3;  //show level up screen
+      gameState = GameState.LEVELUP;  //show level up screen
       break;
     default:
-      gameState = 4; //game over
+      gameState = GameState.GAMEOVER; //game over
       break;
   }
 }
@@ -446,10 +454,10 @@ void keyPressed(){
   }
   //Pause Game
   if (key == ENTER || key == RETURN){
-    if (gameState == 1)
-      gameState = 2; //Paused
-    else if(gameState == 2)
-      gameState = 1;  //Continue Playing
+    if (gameState == GameState.INGAME)
+      gameState = GameState.PAUSED; //Paused
+    else if(gameState == GameState.PAUSED)
+      gameState = GameState.INGAME;  //Continue Playing
   }
 }
 
@@ -457,18 +465,18 @@ void keyPressed(){
 //Method to respond to mouse input
 void mouseReleased(){
   //START SCREEN
-  if (gameState == 0){
-    gameState = 1;  //start the game
+  if (gameState == GameState.PREGAME){
+    gameState = GameState.INGAME;  //start the game
   }
   
-  if (gameState == 3 && level < 9){
-    gameState = 1;
-  }else if(gameState == 3 && level == 9){
-    gameState = 5;
+  if (gameState == GameState.LEVELUP && level < 9){
+    gameState = GameState.INGAME;
+  }else if(gameState == GameState.LEVELUP && level == 9){
+    gameState = GameState.BOSSBATTLE;
   }
   
-  if (gameState == 4){
-    gameState = 0;
+  if (gameState == GameState.GAMEOVER){
+    gameState = GameState.PREGAME;
     setup();
   }
 }
