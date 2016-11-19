@@ -34,9 +34,9 @@ class Boss {
     ellipse(x, y + 50, 0.25 * len, 0.6 * len);
 
     //ALL TEST CODE HERE
-    fill(255);
-    textAlign(CENTER, CENTER);
-    text(lives, x, y);
+    //fill(255);
+    //textAlign(CENTER, CENTER);
+    //text(lives, x, y);
   }
   
   void move() {

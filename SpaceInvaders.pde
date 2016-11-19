@@ -180,6 +180,11 @@ void manageGame(){
   }
   //BOSS BATTLE
   else if (gameState == GameState.BOSSBATTLE){
+    //background particles
+    backParticles1.run();
+    backParticles2.run();
+    backParticles3.run();
+    
     //PLAYER
     player.collide(bossMan.mainBullets);
     player.collide(bossMan.sideBullets);
