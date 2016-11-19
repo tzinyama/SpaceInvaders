@@ -4,12 +4,10 @@ class EnemyManager{
   ArrayList<Enemy> enemies;
   ArrayList<Bullet> bullets;
   int maxBullets;
-  //int moveState;  //0 = horizontal, 1 = vertical, 2 = left diagonal, 3 = right diagonal
   
   EnemyManager(){
     enemies = new ArrayList<Enemy>();
     bullets = new ArrayList<Bullet>();
-    //moveState = 0;
     maxBullets = 2;
   }
   
@@ -25,7 +23,7 @@ class EnemyManager{
   }
   
   void run(){
-    //Arm a random enemy ship toshoot from
+    //Arm a random enemy ship to shoot from
     int armed1 = int(random(enemies.size()));
     int armed2 = int(random(enemies.size()));
     
@@ -37,7 +35,7 @@ class EnemyManager{
       }else if (i == armed2)
         shoot(eny.x, eny.y, 10);
       
-      //Move the player
+      //Move the enemy
       eny.move();
       
       //Collide with different types of bullets

@@ -22,7 +22,6 @@ class WeaponManager{
     lasers = new ArrayList<Laser>();
     emps = new ArrayList<EMP>();
     
-    
     //get all current enemies
     foes = enemyManager.enemies;
   }
@@ -96,8 +95,5 @@ class WeaponManager{
      if(emp.isDead)  
         emps.remove(k);
    }
-   
   }
-  
-  
 }

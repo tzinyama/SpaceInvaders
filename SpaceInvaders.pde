@@ -12,7 +12,7 @@ int gameState; //0 = pregame, 1 = ingame, 2 = paused, 3 = level up, 4 = game ove
 int level;
 int score;
 
-//Number of lasers and emps player has. Are globals variables coz WeaponManger is reset
+//Number of lasers and emps player has. Are globals coz WeaponManger is reset
 //every level and these need to carry over to new levels
 int numLasers;
 int numEmps;
@@ -23,8 +23,6 @@ int empUpgrade;
 ParticleManager backParticles1;
 ParticleManager backParticles2;
 ParticleManager backParticles3;
-
-//ALL TEST CODE HERE
 
 void setup(){
   size(900, 600);
@@ -43,15 +41,12 @@ void setup(){
   laserUpgrade = 0;
   empUpgrade = 0;
   
-  //ad these to setup levels
+  //add these to setupLevels()
   backParticles1 = new ParticleManager(100, -100, 10);
   backParticles2 = new ParticleManager(450, -100, 10);
   backParticles3 = new ParticleManager(800, -100, 10);
   
-  //ALL TEST CODE HERE
-  setupLevel();
-  //setup levels here
-  
+  setupLevel();  
 }
 
 void draw(){
@@ -83,7 +78,6 @@ void manageGame(){
     text("Press TAB to Shoot", 450, 375);
     text("Press Q to Switch Guns", 450, 400);
   
-    
   }
   //INGAME
   else if(gameState == 1){
@@ -92,10 +86,10 @@ void manageGame(){
     backParticles2.run();
     backParticles3.run();
     
-    //Run and display game objects
     player.move();
     player.collide(enemyManager.bullets);
     player.display();
+    
     weaponManager.run();
     enemyManager.run();
     showScore();
@@ -120,11 +114,10 @@ void manageGame(){
     if(player.lives == 0){
       gameState = 4;
     }
-    
   }
   //PAUSED
   else if(gameState == 2){
-     noStroke();
+    noStroke();
     ellipseMode(CENTER);
     fill(#E9FB00);
     ellipse(450, 300, 600, 300);
@@ -211,9 +204,6 @@ void manageGame(){
       gameState = 4;
     }
   }
- 
-  
-  
 }
 
 
@@ -232,8 +222,8 @@ void showScore(){
     textSize(20);
     text(score, 880, 12);
     
-    //display weapon stats
-    //lases
+    //WEAPON STATS
+    //lasers
     fill(#FF0000, 200);
     rectMode(CENTER);
     rect(850, 570, 15, 5);
@@ -250,9 +240,7 @@ void showScore(){
     text(numEmps, 875, 545);
     text(numLasers, 875, 565);
     text(player.guns[player.weapon], 860, 585);
-    
 }
-
 
 //************************************
 //Method to manage levels
@@ -439,10 +427,7 @@ void setupLevel(){
     default:
       gameState = 4; //game over
       break;
-    
   }
-  
-  
 }
 
 //************************************
@@ -486,6 +471,4 @@ void mouseReleased(){
     gameState = 0;
     setup();
   }
-    
-  
 }

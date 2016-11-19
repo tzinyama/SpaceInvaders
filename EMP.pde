@@ -1,11 +1,11 @@
-//Class to manage electro magnetic pulses
+//Class to manage electro-magnetic pulses
 class EMP{
   
   float x;
   float y;
   float size;
   int spd;
-  float scale; //scale emps, boss produces larger emp than rocket
+  float scale; //scale emps coz boss produces larger emp than rocket
   boolean isDead;
   
   EMP(float tx, float ty, float tscale){
@@ -29,8 +29,7 @@ class EMP{
       stroke(#0A67A3);
       ellipse(x, y, 0.9 * size, 0.9 * size);
       stroke(#0A67A3);
-      ellipse(x, y, 0.85 * size, 0.85 * size);
-      
+      ellipse(x, y, 0.85 * size, 0.85 * size);  
     }
   }
   
@@ -47,5 +46,4 @@ class EMP{
       target.isDead = true;
     }
   }
-  
 }

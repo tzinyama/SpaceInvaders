@@ -18,6 +18,7 @@ class Rocket{
     vel = 8;
     len = 100;
     h8 = 100;  //height
+    
     //Set rocket properties
     lives =  8;
     weapon = 0;  //start game with main gun
@@ -25,7 +26,6 @@ class Rocket{
   }
   
   void display(){
-    
     //Player
     stroke(#FFFF00);
     strokeWeight(8);
@@ -45,15 +45,13 @@ class Rocket{
     fill(#FFFF00);
     ellipse(x, y + 12, 35, 60);
     
-    //Display lives on the sides
+    //Display player lives on the sides
     for (int l = 0, lx = 12; l < lives; l++, lx += 12){
        fill(#FFFF00);
        ellipse(lx, 580, 10, 10);
        fill(#8106A9);
        ellipse(lx, 580, 7, 7);
     }
-    
-    
   }
   
   void move(){
@@ -81,9 +79,6 @@ class Rocket{
     else if (y > height){
      y =  height;
     }
-    
-    
-    
   }
   
   void collide(ArrayList<Bullet> enemyBullets){
@@ -96,7 +91,6 @@ class Rocket{
       }
     }
   }
-    
    
   //collide with boss EMP
   void collideEMP(ArrayList<EMP> bossEmps){
@@ -107,8 +101,5 @@ class Rocket{
         lives--;
       }
     } 
-     
-    
   }
-  
 }

@@ -31,8 +31,5 @@ class Bullet{
       isDead = true;
     else if( y > height + 100)
       isDead = true;
-  }
-  
-  //Enemy handles collision
-  
+  }  
 }

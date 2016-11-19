@@ -34,6 +34,4 @@ class Laser{
       target.isDead = true;
     } 
   }
-  
-  
 }

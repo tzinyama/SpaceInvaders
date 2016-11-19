@@ -25,12 +25,12 @@ class Particle{
     lifespan = 255.0;
   }
   
-  void run(){ //better than individually calling update() & display()
+  void run(){
     update();
     display();
   }
   
-  //Method to update location;
+  //Update location;
   void update(){
     yvel += acceleration;  //gradually gain speed downwards
     
@@ -40,7 +40,6 @@ class Particle{
     lifespan -= 1.0;
   }
   
-  //Method to display
   void display(){
     noStroke();
     fill(clr, lifespan);  //gradually become transparent
@@ -55,9 +54,7 @@ class Particle{
       return false;
     }
   }
-  
 }
-
 
 //*************************************************************
 //Particles Manager Class

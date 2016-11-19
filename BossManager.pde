@@ -48,7 +48,6 @@ class BossManager{
     }
   }
   
-  
   void run(){
     boss.move();
     boss.collide(weaponManager.mainBullets);
@@ -101,5 +100,4 @@ class BossManager{
   boolean isDead(){
     return boss.lives == 0;
   }
-  
 }

@@ -39,7 +39,6 @@ class Boss {
     text(lives, x, y);
   }
   
-  
   void move() {
     x += speed * xdir;
     y += speed/2 * ydir;
@@ -99,5 +98,4 @@ class Boss {
       }
     }
   }
-  
 }
