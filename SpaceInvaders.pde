@@ -1,6 +1,6 @@
 /*
-Space Invaders
-by Tino Zinyama
+  Space Invaders
+  by Tino Zinyama
 */
 enum GameState{
   PREGAME,
@@ -21,11 +21,11 @@ GameState gameState;
 int level;
 int score;
 
-//Number of lasers and emps player has. Are globals coz WeaponManger is reset
-//every level and these need to carry over to new levels
+// number of lasers and emps player has
 int numLasers;
 int numEmps;
-//Number of enemies killes before you get bullets for special guns
+
+// number of enemies killes before you get bullets for special guns
 int laserUpgrade;
 int empUpgrade;
 
@@ -58,17 +58,17 @@ void setup(){
   setupLevel();  
 }
 
+
 void draw(){
   background(0);
   manageGame();
   
 }
 
-//************************************
-//Method to manage gameplay
+
 void manageGame(){
   
-  //WELCOME SCREEN
+  // WELCOME SCREEN
   if (gameState == GameState.PREGAME){ //
     noStroke();
     ellipseMode(CENTER);
@@ -88,7 +88,7 @@ void manageGame(){
     text("Press Q to Switch Guns", 450, 400);
   
   }
-  //INGAME
+  // INGAME
   else if(gameState == GameState.INGAME){
     
     backParticles1.run();
@@ -103,7 +103,7 @@ void manageGame(){
     enemyManager.run();
     showScore();
     
-    //check for guns upgrade
+    // check for guns upgrade
     if (laserUpgrade == 5){
       numLasers++;
       laserUpgrade = 0;
@@ -113,18 +113,18 @@ void manageGame(){
       empUpgrade = 0;
     }
     
-    //Check for level up condition
+    // check for level up condition
     if (enemyManager.enemies.size() == 0){
       level++; //level up
       gameState = GameState.LEVELUP; //Level Up
     }
     
-    //Check for game over condition
+    // check for game over condition
     if(player.lives == 0){
       gameState = GameState.GAMEOVER;
     }
   }
-  //PAUSED
+  // PAUSED
   else if(gameState == GameState.PAUSED){
     noStroke();
     ellipseMode(CENTER);
@@ -140,7 +140,7 @@ void manageGame(){
     text("Press ENTER to Continue", 450, 300);
     textSize(15);
   }
-  //LEVEL UP
+  // LEVEL UP
   else if(gameState == GameState.LEVELUP){
     noStroke();
     ellipseMode(CENTER);
@@ -155,12 +155,12 @@ void manageGame(){
     textSize(25);
     text("Click to Start Level " + level, 450, 300);
     
-    //Set next level
+    // set next level
     if(player.lives <= 5)
       player.lives += 2;
     setupLevel();
   }
-  //GAME OVER
+  // GAME OVER
   else if (gameState == GameState.GAMEOVER){
     noStroke();
     ellipseMode(CENTER);
@@ -178,14 +178,14 @@ void manageGame(){
     text("Click to Play Again", 450, 360);
     
   }
-  //BOSS BATTLE
+  // BOSS BATTLE
   else if (gameState == GameState.BOSSBATTLE){
     //background particles
     backParticles1.run();
     backParticles2.run();
     backParticles3.run();
     
-    //PLAYER
+    // PLAYER
     player.collide(bossMan.mainBullets);
     player.collide(bossMan.sideBullets);
     player.collideEMP(bossMan.emps);
@@ -194,11 +194,11 @@ void manageGame(){
  
     weaponManager.run();
     bossMan.run();
-    //BOSS
+    // BOSS
     
     showScore();
     
-    //check for guns upgrade
+    // check for guns upgrade
     if (laserUpgrade == 5){
       numLasers++;
       laserUpgrade = 0;
@@ -208,11 +208,11 @@ void manageGame(){
       empUpgrade = 0;
     }
     
-    //Check for game over condition
+    // check for game over condition
     if(player.lives == 0){
       gameState = GameState.GAMEOVER;
     }
-    //Check for player won condition
+    // check for player won condition
     if(bossMan.isDead()){
       playerWon = true;
       gameState = GameState.GAMEOVER;
@@ -220,10 +220,9 @@ void manageGame(){
   }
 }
 
-//************************************
-//Method to display game stats
+
 void showScore(){
-   //display score
+   // display score
     noStroke();
     ellipseMode(CENTER);
     fill(#FFFF00);
@@ -235,18 +234,18 @@ void showScore(){
     textSize(20);
     text(score, 880, 12);
     
-    //WEAPON STATS
-    //lasers
+    // WEAPON STATS
+    // lasers
     fill(#FF0000, 200);
     rectMode(CENTER);
     rect(850, 570, 15, 5);
-    //emps
+    // emps
     stroke(#0A67A3);
     noFill();
     strokeWeight(3);
     ellipseMode(CENTER);
     ellipse(850, 550, 12, 12);
-    //details
+    // details
     fill(255);
     textAlign(CENTER,CENTER);
     textSize(15);
@@ -255,62 +254,61 @@ void showScore(){
     text(player.guns[player.weapon], 860, 585);
 }
 
-//************************************
-//Method to manage levels
+
 void setupLevel(){
   int y;
   int numPerRow;
   switch(level){
-    //LEVEL 1
+    // LEVEL 1
     case 1:
-      //PLace level 1 enemies
+      // place level 1 enemies
       y = 60;
       numPerRow = 7;
       for(int i = 0, x = 90; i < 7; i++, x += 120){
         enemyManager.addEnemy(x, y, 1, 0);
       }
       break;
-    //LEVEL 2
+    // LEVEL 2
     case 2:
-      //Reset gameManagers;
+      // reset gameManagers;
       enemyManager = new EnemyManager();
       weaponManager = new WeaponManager(player);
-      //Place level 2 enemies
+      // place level 2 enemies
       y = 60;
       numPerRow = 7;
       for(int i = 0, x = 90, count = 1; i < 14; i++, x += 120, count++){
         enemyManager.addEnemy(x, y, 0, 1);
-        //only add 7 per row
+        // only add 7 per row
         if(count % numPerRow == 0){
           x = -30;
           y += 120;
         }
       }
       break;
-    //LEVEL 3
+    // LEVEL 3
     case 3:
-      //Reset gameManagers;
+      // reset gameManagers;
       enemyManager = new EnemyManager();
       weaponManager = new WeaponManager(player);
-      //first row
+      // first row
       y = 60;
        for(int i = 0, x = 90; i < 7; i++, x += 120){
         enemyManager.addEnemy(x, y, 1, 0);
        }
-       //second row
+       // second row
        y = 180;
        for (int i = 0, x = 210; i < 5; i++, x += 120){
          enemyManager.addEnemy(x, y, 0, 1);
        }
-       //thrid row
+       // thrid row
        y = 300;
        for (int i = 0, x = 330; i < 3; i++, x += 120){
          enemyManager.addEnemy(x, y, -1, 0);
        }
        break;
-    //LEVEL 4
+    // LEVEL 4
     case 4:
-     //Reset gameManagers;
+     // reset gameManagers;
       enemyManager = new EnemyManager();
       weaponManager = new WeaponManager(player);
       y = 60;
@@ -323,7 +321,7 @@ void setupLevel(){
           y += 120;
         }
       }
-      //Right enemies
+      // right enemies
       y = 60;
       for (int i = 0, x = 570, count = 1; i < 6; i++, count++, x += 120){
         enemyManager.addEnemy(x, y, -1, 0);
@@ -334,27 +332,27 @@ void setupLevel(){
         }
       }
       break;
-    //LEVEL 5
+    // LEVEL 5
     case 5:
-      //Reset gameManagers;
+      // reset gameManagers;
       enemyManager = new EnemyManager();
       weaponManager = new WeaponManager(player);
       y = 60;
-      //Left enemies
+      // left enemies
       for (int i = 0, x = 90, count = 1; i < 6; i++, count++, x += 120){
         enemyManager.addEnemy(x, y, 0, 1);
-        //Jump to next row
+        // jump to next row
         if(count % 3 == 0){
           x = -30;
           y += 120;
         }
       }
       enemyManager.addEnemy(330, 300, 1, 1);
-      //Right enemies
+      // right enemies
       y = 60;
       for (int i = 0, x = 570, count = 1; i < 6; i++, count++, x += 120){
         enemyManager.addEnemy(x, y, 0, -1);
-        //Jump to next row
+        // jump to next row
         if(count % 3 == 0){
           x = 450;
           y += 120;
@@ -362,29 +360,29 @@ void setupLevel(){
       }
       enemyManager.addEnemy(570, 300, 1, 1);
       break;
-    //LEVEL 6
+    // LEVEL 6
     case 6:
-      //Reset gameManagers;
+      // reset gameManagers;
       enemyManager = new EnemyManager();
       weaponManager = new WeaponManager(player);
       y = 60;
-      //Left enemies
+      // left enemies
       for (int i = 0, x = 90, count = 1; i < 6; i++, count++, x += 120){
         enemyManager.addEnemy(x, y, 1, 1);
-        //Jump to next row
+        // jump to next row
         if(count % 2 == 0){
           x = -30;
           y += 120;
         }
       }
-      //Middle Enemeies
+      // middle Enemeies
       y = 60;
       for (int i = 0, x = 450; i < 3; i++){
         enemyManager.addEnemy(x, y, 1, 0);
-        //Jump to next row
+        // jump to next row
         y += 120;
       }
-      //Right Enemies
+      // right enemies
       y = 60;
       for (int i = 0, x = 690, count = 1; i < 6; i++, count++, x += 120){
         enemyManager.addEnemy(x, y, 1, 1);
@@ -395,56 +393,55 @@ void setupLevel(){
         }
       }
       break;
-    //Level 7
+    // Level 7
     case 7:
-      //Reset gameManagers;
+      // reset gameManagers;
       enemyManager = new EnemyManager();
       weaponManager = new WeaponManager(player);
-      //first row
+      // first row
       y = 60;
        for(int i = 0, x = 90; i < 7; i++, x += 120){
         enemyManager.addEnemy(x, y, 1, 0);
        }
-       //second row
+       // second row
        y = 180;
        for (int i = 0, x = 210; i < 5; i++, x += 120){
          enemyManager.addEnemy(x, y, 1, 1);
        }
       break;
-    //Level 8
+    // Level 8
     case 8:
-      //Reset gameManagers;
+      // reset gameManagers;
       enemyManager = new EnemyManager();
       weaponManager = new WeaponManager(player);
-      //Place level 2 enemies
+      // place level 2 enemies
       y = 60;
       numPerRow = 7;
       for(int i = 0, x = 90, count = 1; i < 21; i++, x += 120, count++){
         enemyManager.addEnemy(x, y, 1, 1);
-        //only add 7 per row
+        // only add 7 per row
         if(count % numPerRow == 0){
           x = -30;
           y += 120;
         }
       }
       break;
-    //BOSS BATTLES
+    // BOSS BATTLES
     case 9:
-      //Reset gameManagers;
+      // reset gameManagers;
       bossMan = new BossManager();
       weaponManager = new WeaponManager(player);
       if(player.lives <= 5)
         player.lives += 5;
-      gameState = GameState.LEVELUP;  //show level up screen
+      gameState = GameState.LEVELUP;  // show level up screen
       break;
     default:
-      gameState = GameState.GAMEOVER; //game over
+      gameState = GameState.GAMEOVER; // game over
       break;
   }
 }
 
-//************************************
-//Method to respond to keyboard input
+
 void keyPressed(){
   
   //Shoot
@@ -460,18 +457,17 @@ void keyPressed(){
   //Pause Game
   if (key == ENTER || key == RETURN){
     if (gameState == GameState.INGAME)
-      gameState = GameState.PAUSED; //Paused
+      gameState = GameState.PAUSED;
     else if(gameState == GameState.PAUSED)
-      gameState = GameState.INGAME;  //Continue Playing
+      gameState = GameState.INGAME;
   }
 }
 
-//************************************
-//Method to respond to mouse input
+
 void mouseReleased(){
   //START SCREEN
   if (gameState == GameState.PREGAME){
-    gameState = GameState.INGAME;  //start the game
+    gameState = GameState.INGAME;
   }
   
   if (gameState == GameState.LEVELUP && level < 9){
