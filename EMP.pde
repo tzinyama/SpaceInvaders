@@ -1,23 +1,25 @@
-//Class to manage electro-magnetic pulses
-class EMP{
+class EMP{  // electro-magnetic pulse
   
   float x;
   float y;
+  
   float size;
-  int spd;
-  float scale; //scale emps coz boss produces larger emp than rocket
+  int speed;
+  float scale; // scale emps becuase the boss produces larger emp than rocket
+  
   boolean isDead;
   
   EMP(float tx, float ty, float tscale){
     x = tx;
     y = ty;
+    
     scale = tscale;
     size = 50 * scale;
-    spd = 5;
+    speed = 5;
   }
   
   void display(){
-    //emp is still usefull
+    
     if(!isDead){
       noFill();
       strokeWeight(5);
@@ -34,7 +36,7 @@ class EMP{
   }
   
   void move(){
-    size += spd;
+    size += speed;
     //max range of emp
     if (size > 500 * scale)  //
       isDead = true;

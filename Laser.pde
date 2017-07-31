@@ -3,14 +3,14 @@ class Laser{
   float x;
   float ystart;
   float yend;
-  int spd;
+  int speed;
   boolean isDead;
   
   Laser(float tx, float ty){
     x = tx;
     ystart = ty;
     yend = ystart - 50;
-    spd = 100;
+    speed = 100;
     isDead = false;
   }
   
@@ -23,7 +23,7 @@ class Laser{
   }
   
   void move(){
-    yend -= spd;
+    yend -= speed;
     //disable laser after some time
     if (yend < - 300)
       isDead = true;

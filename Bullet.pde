@@ -2,17 +2,19 @@ class Bullet{
   
   float x;
   float y;
-  int spd;  //speed
+  
+  int speed;  //speed
   int size;
-  int dir; // 1 = up, -1 = down
+  int direction; // 1 = up, -1 = down
+  
   boolean isDead;
   
   Bullet(float tx, float ty, int tsize, int dir){
     x = tx;
     y = ty;
-    this.dir = dir;
+    this.direction = dir;
     size = tsize;
-    spd = 8;
+    speed = 8;
     isDead = false;
   }
   
@@ -24,7 +26,7 @@ class Bullet{
   }
   
   void move(){
-    y -= spd * dir;
+    y -= speed * direction;
     
     //Bullet is off the screen
     if (y < -100)
