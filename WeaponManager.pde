@@ -45,7 +45,7 @@ class WeaponManager{
         break;
       case 2: // laser
         if (lasers.size() < maxLasers && numLasers > 0){
-          lasers.add( new Laser(roc.x, (roc.y - roc.h8/2) - 5));
+          lasers.add( new Laser(roc.x, (roc.y - roc.myHeight/2) - 5));
           numLasers--;
         }
         break;

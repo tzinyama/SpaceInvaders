@@ -1,4 +1,3 @@
-//class to manage enemies
 class EnemyManager{
   
   ArrayList<Enemy> enemies;
@@ -11,8 +10,8 @@ class EnemyManager{
     maxBullets = 2;
   }
   
-  void addEnemy(float tx, float ty, int xd, int yd){  //xd and yd, the x and y directions
-     enemies.add(new Enemy(tx, ty, xd, yd));
+  void addEnemy(float tx, float ty, int xdirection, int ydirection){
+     enemies.add(new Enemy(tx, ty, xdirection, ydirection));
   }
   
   void shoot(float tx, float ty, int size){
@@ -23,34 +22,34 @@ class EnemyManager{
   }
   
   void run(){
-    //Arm a random enemy ship to shoot from
+    // arm a random enemy ship to shoot from
     int armed1 = int(random(enemies.size()));
     int armed2 = int(random(enemies.size()));
     
     for (int i = 0; i < enemies.size(); i++){
       Enemy eny = enemies.get(i);
-      //shoot from random ship
+      
       if(i == armed1){
         shoot(eny.x, eny.y, 10); //shoot a bullet
-      }else if (i == armed2)
+      }else if (i == armed2){
         shoot(eny.x, eny.y, 10);
+      }
       
-      //Move the enemy
       eny.move();
       
-      //Collide with different types of bullets
-      eny.collide(weaponManager.mainBullets); //collide with ships main bullets
-      eny.collide(weaponManager.sideBullets);  //collide with side bullets
-      eny.collideLaser(weaponManager.lasers);  //collide with lasers
-      eny.collideEMP(weaponManager.emps);  //collide with emps
+      // collide with different types of bullets
+      eny.collide(weaponManager.mainBullets);
+      eny.collide(weaponManager.sideBullets);
+      eny.collideLaser(weaponManager.lasers);
+      eny.collideEMP(weaponManager.emps);
       eny.display();
         
-      //remove dead enemies
+      // remove dead enemies
       if(eny.isDead)
         enemies.remove(i);
     }
     
-    //Manage enemy bullets
+    // manage enemy bullets
     for (int i = 0; i < bullets.size(); i++){
       Bullet b = bullets.get(i);
       b.move();
