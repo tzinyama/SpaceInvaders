@@ -1,4 +1,3 @@
-//class to manage the boss
 class BossManager{
   
   Boss boss;
@@ -6,12 +5,14 @@ class BossManager{
   ArrayList<Bullet> sideBullets;
   ArrayList<EMP> emps;
   
-  int gun;
-  //Gun that the boss will use. 0 = main gun, 1 = side guns, 2 = emp
-  //Boss picks random gun from guns array so he has 50% probability of using main gun, 
-  //40% probability of using side gun and 10% probability of using EMP
+  int gun;  // Gun that the boss will use. 0 = main gun, 1 = side guns, 2 = emp
+  
+  /*
+    Boss picks random gun from guns array so he has 50% probability of using main gun, 
+    40% probability of using side gun and 10% probability of using EMP
+  */
   int guns[] = {0, 0, 1, 1, 0, 0, 1, 2, 0, 1};
-  int shootDelay = 0; //Number of frames to wait before boss can shoot
+  int shootDelay = 0; // number of frames to wait before boss can shoot
   
   BossManager(){
     boss = new Boss();
@@ -30,14 +31,14 @@ class BossManager{
           mainBullets.add(new Bullet(boss.x, boss.y + 75, 12, -1));
         }
         break;
-      //Side bullets
+      // Side bullets
       case 1:
         if (sideBullets.size() < 3){
           sideBullets.add(new Bullet(boss.x - 0.3* boss.len, boss.y + 30, 9, -1));
           sideBullets.add(new Bullet(boss.x + 0.3* boss.len, boss.y + 30, 9, -1));
         }
         break;
-      //EMPs
+      // EMPs
       case 2:
         if(emps. size() < 1){
           emps.add(new EMP(boss.x, boss.y, 1.5)); //scale of 1.5
@@ -56,11 +57,11 @@ class BossManager{
     boss.collideEMP(weaponManager.emps);
     boss.display();
     
-    //See if game is over
+    // see if game is over
     if(bossMan.isDead())
       gameState = GameState.GAMEOVER;  // Another game state for beat the game
       
-    //Main Bullets
+    // main Bullets
     for(int i = 0; i < mainBullets.size(); i++){
       Bullet bullet = mainBullets.get(i);
       bullet.move();
@@ -69,7 +70,7 @@ class BossManager{
         mainBullets.remove(i);
     }
     
-     //Side bullets
+     // side bullets
    for (int i = 0; i < (sideBullets.size()); i++){
      Bullet bullet = sideBullets.get(i);
      bullet.move();
@@ -79,7 +80,7 @@ class BossManager{
       sideBullets.remove(i);
    }
    
-   //EMP
+   // EMP
    for (int k = 0; k < emps.size(); k++){
      EMP emp = emps.get(k);
      emp.display();
@@ -96,7 +97,6 @@ class BossManager{
   
   }
   
-  //Function to check if boss is dead
   boolean isDead(){
     return boss.lives == 0;
   }
