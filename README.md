@@ -1,7 +1,7 @@
 # Space Shooter
 - Destroy all the alien space pods and save the universe!
 
-###Game Controls
+### Game Controls
 - ARROW KEYS to move your spaceship
 - TAB to shoot
 - ‘Q’ to switch weapons
