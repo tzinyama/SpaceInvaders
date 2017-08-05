@@ -62,125 +62,140 @@ void setup(){
 void draw(){
   background(0);
   manageGame();
-  
 }
 
 
 void manageGame(){
   
-  // WELCOME SCREEN
   if (gameState == GameState.PREGAME){ //
-    noStroke();
-    ellipseMode(CENTER);
-    fill(#E9FB00);
-    ellipse(450, 300, 600, 300);
-    fill(#8106A9);
-    ellipse(450, 300, 550, 250);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(40);
-    text("SPACE INVADERS", 450, 250);
-    textSize(25);
-    text("Click to Start", 450, 300);
-    textSize(15);
-    text("Use Arrow Keys to Move", 450, 350);
-    text("Press TAB to Shoot", 450, 375);
-    text("Press Q to Switch Guns", 450, 400);
-  
+    welcomeScreen();
   }
-  // INGAME
   else if(gameState == GameState.INGAME){
-    
-    backParticles1.run();
-    backParticles2.run();
-    backParticles3.run();
-    
-    player.move();
-    player.collide(enemyManager.bullets);
-    player.display();
-    
-    weaponManager.run();
-    enemyManager.run();
-    showScore();
-    
-    // check for guns upgrade
-    if (laserUpgrade == 5){
-      numLasers++;
-      laserUpgrade = 0;
-    }
-    if (empUpgrade == 10){
-      numEmps++;
-      empUpgrade = 0;
-    }
-    
-    // check for level up condition
-    if (enemyManager.enemies.size() == 0){
-      level++; //level up
-      gameState = GameState.LEVELUP; //Level Up
-    }
-    
-    // check for game over condition
-    if(player.lives == 0){
-      gameState = GameState.GAMEOVER;
-    }
+    inGame();
   }
-  // PAUSED
   else if(gameState == GameState.PAUSED){
-    noStroke();
-    ellipseMode(CENTER);
-    fill(#E9FB00);
-    ellipse(450, 300, 600, 300);
-    fill(#8106A9);
-    ellipse(450, 300, 550, 250);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(40);
-    text("PAUSED", 450, 250);
-    textSize(25);
-    text("Press ENTER to Continue", 450, 300);
-    textSize(15);
+    gamePaused();
   }
-  // LEVEL UP
   else if(gameState == GameState.LEVELUP){
-    noStroke();
-    ellipseMode(CENTER);
-    fill(#E9FB00);
-    ellipse(450, 300, 600, 300);
-    fill(#8106A9);
-    ellipse(450, 300, 550, 250);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(40);
-    text("SPACE INVADERS", 450, 250);
-    textSize(25);
-    text("Click to Start Level " + level, 450, 300);
-    
-    // set next level
-    if(player.lives <= 5)
-      player.lives += 2;
-    setupLevel();
+    levelUp();
   }
-  // GAME OVER
   else if (gameState == GameState.GAMEOVER){
-    noStroke();
-    ellipseMode(CENTER);
-    fill(#E9FB00);
-    ellipse(450, 300, 600, 300);
-    fill(#8106A9);
-    ellipse(450, 300, 550, 250);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(40);
-    text(!playerWon ? "Game Over" : "You Won!", 450, 250);
-    textSize(25);
-    text("Your Score : " + score , 450, 300);
-    textSize(20);
-    text("Click to Play Again", 450, 360);
-    
+    gameOver();
   }
-  // BOSS BATTLE
   else if (gameState == GameState.BOSSBATTLE){
-    //background particles
+    bossBattle();
+  }
+}
+
+void welcomeScreen(){
+  noStroke();
+  ellipseMode(CENTER);
+  fill(#E9FB00);
+  ellipse(450, 300, 600, 300);
+  fill(#8106A9);
+  ellipse(450, 300, 550, 250);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(40);
+  text("SPACE INVADERS", 450, 250);
+  textSize(25);
+  text("Click to Start", 450, 300);
+  textSize(15);
+  text("Use Arrow Keys to Move", 450, 350);
+  text("Press TAB to Shoot", 450, 375);
+  text("Press Q to Switch Guns", 450, 400);
+}
+
+void inGame(){
+  backParticles1.run();
+  backParticles2.run();
+  backParticles3.run();
+  
+  player.move();
+  player.collide(enemyManager.bullets);
+  player.display();
+  
+  weaponManager.run();
+  enemyManager.run();
+  showScore();
+  
+  // check for guns upgrade
+  if (laserUpgrade == 5){
+    numLasers++;
+    laserUpgrade = 0;
+  }
+  if (empUpgrade == 10){
+    numEmps++;
+    empUpgrade = 0;
+  }
+  
+  // check for level up condition
+  if (enemyManager.enemies.size() == 0){
+    level++; //level up
+    gameState = GameState.LEVELUP; //Level Up
+  }
+  
+  // check for game over condition
+  if(player.lives == 0){
+    gameState = GameState.GAMEOVER;
+  }
+}
+
+void gamePaused(){
+  noStroke();
+  ellipseMode(CENTER);
+  fill(#E9FB00);
+  ellipse(450, 300, 600, 300);
+  fill(#8106A9);
+  ellipse(450, 300, 550, 250);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(40);
+  text("PAUSED", 450, 250);
+  textSize(25);
+  text("Press ENTER to Continue", 450, 300);
+  textSize(15);
+}
+
+void levelUp(){
+  noStroke();
+  ellipseMode(CENTER);
+  fill(#E9FB00);
+  ellipse(450, 300, 600, 300);
+  fill(#8106A9);
+  ellipse(450, 300, 550, 250);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(40);
+  text("SPACE INVADERS", 450, 250);
+  textSize(25);
+  text("Click to Start Level " + level, 450, 300);
+  
+  // set next level
+  if(player.lives <= 5)
+    player.lives += 2;
+  setupLevel();
+}
+
+void gameOver(){
+  noStroke();
+  ellipseMode(CENTER);
+  fill(#E9FB00);
+  ellipse(450, 300, 600, 300);
+  fill(#8106A9);
+  ellipse(450, 300, 550, 250);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(40);
+  text(!playerWon ? "Game Over" : "You Won!", 450, 250);
+  textSize(25);
+  text("Your Score : " + score , 450, 300);
+  textSize(20);
+  text("Click to Play Again", 450, 360);
+}
+
+void bossBattle(){
+  //background particles
     backParticles1.run();
     backParticles2.run();
     backParticles3.run();
@@ -217,7 +232,6 @@ void manageGame(){
       playerWon = true;
       gameState = GameState.GAMEOVER;
     }
-  }
 }
 
 
@@ -441,7 +455,6 @@ void setupLevel(){
   }
 }
 
-
 void keyPressed(){
   
   //Shoot
@@ -463,9 +476,7 @@ void keyPressed(){
   }
 }
 
-
 void mouseReleased(){
-  //START SCREEN
   if (gameState == GameState.PREGAME){
     gameState = GameState.INGAME;
   }
